@@ -86,15 +86,17 @@ document.addEventListener('DOMContentLoaded', () => {
         responseContainer.style.display = 'block';
         responseContainer.appendChild(spinner);
 
-            try {
-        // Change the URL here to call your Netlify function
-        const response = await fetch('/.netlify/functions/proxy', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
+
+try {
+    // Change the URL here to call your Netlify function
+    const response = await fetch('/.netlify/functions/proxy', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
               
               if (!response.ok) {
             const errorDetails = await response.text();
