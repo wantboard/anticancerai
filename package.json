@@ -1,0 +1,14 @@
+{
+  "name": "nutrientsai",
+  "version": "1.0.0",
+  "description": "Nutrients AI",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Clement Lo",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^3.3.1"
+  }
+}
