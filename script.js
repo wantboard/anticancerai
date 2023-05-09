@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
         // Change the URL here to call your Netlify function
-        const response = await fetch('./functions/proxy', {
+        const response = await fetch('/.netlify/functions/proxy', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
