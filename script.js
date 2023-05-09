@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const spinner = document.createElement('div');
     spinner.className = 'spinner';
 
-   async function streamResponse(text, searchResults) {
+async function streamResponse(text, searchResults) {
     responseContainer.innerHTML = '';
     responseContainer.style.display = 'block';
 
@@ -55,28 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 }
-
-        if (searchResults) {
-            const searchResultsTitle = document.createElement('h3');
-            searchResultsTitle.textContent = 'References:';
-            responseContainer.appendChild(searchResultsTitle);
-
-            const searchResultsList = document.createElement('ul');
-            responseContainer.appendChild(searchResultsList);
-
-            searchResults.forEach(result => {
-                const searchResultItem = document.createElement('li');
-                const searchResultLink = document.createElement('a');
-                searchResultLink.href = `https://pubmed.ncbi.nlm.nih.gov/${result.metadata.pmid}/`;
-                searchResultLink.textContent = `PMID: ${result.metadata.pmid}`;
-                searchResultLink.target = '_blank';
-                searchResultItem.appendChild(searchResultLink);
-                searchResultsList.appendChild(searchResultItem);
-            });
-        }
-    }
-
-  
 
     async function askQuestion() {
         const nutrient = nutrientSelect.value;
