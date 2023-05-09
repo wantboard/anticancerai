@@ -12,8 +12,7 @@ exports.handler = async function(event, context) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // Add the Authorization header here
-                'Authorization': `Bearer ${process.env.BASEPLATE_API_KEY}`
+                'Authorization': process.env.BASEPLATE_API_KEY
             },
             body: JSON.stringify(data)
         });
