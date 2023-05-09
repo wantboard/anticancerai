@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<link rel='stylesheet' type='text/css' href='./style.css' />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProductBase</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Anticancer AI</h1>
+        <div class="form-container">
+            <div class="form-group">
+                <label for="nutrient">Nutrient</label>
+                <select id="nutrient" name="nutrient">
+                    <option value="EGCG">EGCG</option>
+                    <option value="Sulforaphane">Sulforaphane</option>
+                    <option value="Curcumin">Curcumin</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="problem">Your question</label>
+                <textarea id="problem" rows="4" placeholder="Enter your problem here..."></textarea>
+            </div>
+            <button id="ask-question">Ask Question</button>
+        </div>
+        <div id="response-container" class="response-container"></div>
+      <div id="search-results-container"></div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
