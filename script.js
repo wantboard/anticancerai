@@ -86,17 +86,16 @@ document.addEventListener('DOMContentLoaded', () => {
         responseContainer.style.display = 'block';
         responseContainer.appendChild(spinner);
 
-        try {
-            const response = await fetch('https://app.baseplate.ai/api/endpoints/2af21e09-6ba3-4bea-9372-c063bff8399d/completions', {
-                method: 'POST',
-                headers: {
-                   
-'Content-Type': 'application/json',
-'Authorization': 'Bearer e77697a7-589d-418b-a52a-8b3c83007af7'
-},
-body: JSON.stringify(data)
-});
-
+            try {
+        // Change the URL here to call your Netlify function
+        const response = await fetch('/functions/proxy', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+              
               if (!response.ok) {
             const errorDetails = await response.text();
             throw new Error(`API request failed: ${errorDetails}`);

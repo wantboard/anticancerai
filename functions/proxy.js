@@ -1,26 +1,34 @@
 const fetch = require('node-fetch');
 
-exports.handler = async function (event, context) {
-  const data = JSON.parse(event.body);
-  const response = await fetch('https://www.trybaseplate.io/api/endpoints/8fc09cbb-aba8-409d-862a-cb2a523fb2e5/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.BASEPLATE_API_KEY}`
-    },
-    body: JSON.stringify(data)
-  });
+exports.handler = async function(event, context) {
+    if (event.httpMethod !== 'POST') {
+        return { statusCode: 405, body: 'Method Not Allowed' };
+    }
 
-  if (response.ok) {
-    const result = await response.json();
-    return {
-      statusCode: 200,
-      body: JSON.stringify(result)
-    };
-  } else {
-    return {
-      statusCode: response.status,
-      body: await response.text()
-    };
-  }
+    const data = JSON.parse(event.body);
+
+    try {
+        const response = await fetch('https://app.baseplate.ai/api/endpoints/2af21e09-6ba3-4bea-9372-c063bff8399d/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Add the Authorization header here
+                'Authorization': `Bearer ${process.env.BASEPLATE_API_KEY}`
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error(`API request failed: ${await response.text()}`);
+        }
+
+        const result = await response.json();
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify(result)
+        };
+    } catch (error) {
+        return { statusCode: 500, body: error.toString() };
+    }
 };
