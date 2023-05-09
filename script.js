@@ -6,43 +6,55 @@ document.addEventListener('DOMContentLoaded', () => {
     const spinner = document.createElement('div');
     spinner.className = 'spinner';
 
-    async function streamResponse(text, searchResults) {
-        responseContainer.innerHTML = '';
-        responseContainer.style.display = 'block';
+   async function streamResponse(text, searchResults) {
+    responseContainer.innerHTML = '';
+    responseContainer.style.display = 'block';
 
-        const listItemRegex = /^(-|\u{1F300}-\u{1F5FF}|\u{1F900}-\u{1F9FF}|\u{1F600}-\u{1F64F}|\d+\.)/u;
+    const listItemRegex = /^(-|\u{1F300}-\u{1F5FF}|\u{1F900}-\u{1F9FF}|\u{1F600}-\u{1F64F}|\d+\.)/u;
 
-        const lines = text.split('\n');
-        let currentSection = '';
+    const lines = text.split('\n');
+    let currentSection = '';
 
-        for (const line of lines) {
-            if (listItemRegex.test(line)) {
-                if (currentSection !== 'bullets') {
-                    currentSection = 'bullets';
-                    const bulletsList = document.createElement('ul');
-                    responseContainer.appendChild(bulletsList);
-                }
-                const listItem = document.createElement('li');
-                listItem.textContent = '';
-                responseContainer.lastElementChild.appendChild(listItem);
-                const content = line.replace(listItemRegex, '').trim();
-                for (let i = 0; i < content.length; i++) {
-                    await new Promise(resolve => setTimeout(resolve, 15));
-                    listItem.textContent += content[i];
-                }
-            } else {
-                if (currentSection !== 'text') {
-                    currentSection = 'text';
-                    const paragraph = document.createElement('p');
-                    paragraph.textContent = '';
-                    responseContainer.appendChild(paragraph);
-                }
-                for (let i = 0; i < line.length; i++) {
-                    await new Promise(resolve => setTimeout(resolve, 15));
-                    responseContainer.lastElementChild.textContent += line[i];
-                }
+    for (const line of lines) {
+        if (listItemRegex.test(line)) {
+            if (currentSection !== 'bullets') {
+                currentSection = 'bullets';
+                const bulletsList = document.createElement('ul');
+                responseContainer.appendChild(bulletsList);
             }
+            const listItem = document.createElement('li');
+            responseContainer.lastElementChild.appendChild(listItem);
+            const content = line.replace(listItemRegex, '').trim();
+            listItem.textContent = content;
+        } else {
+            if (currentSection !== 'text') {
+                currentSection = 'text';
+                const paragraph = document.createElement('p');
+                responseContainer.appendChild(paragraph);
+            }
+            responseContainer.lastElementChild.textContent += line;
         }
+    }
+
+    if (searchResults) {
+        const searchResultsTitle = document.createElement('h3');
+        searchResultsTitle.textContent = 'References:';
+        responseContainer.appendChild(searchResultsTitle);
+
+        const searchResultsList = document.createElement('ul');
+        responseContainer.appendChild(searchResultsList);
+
+        searchResults.forEach(result => {
+            const searchResultItem = document.createElement('li');
+            const searchResultLink = document.createElement('a');
+            searchResultLink.href = `https://pubmed.ncbi.nlm.nih.gov/${result.metadata.pmid}/`;
+            searchResultLink.textContent = `PMID: ${result.metadata.pmid}`;
+            searchResultLink.target = '_blank';
+            searchResultItem.appendChild(searchResultLink);
+            searchResultsList.appendChild(searchResultItem);
+        });
+    }
+}
 
         if (searchResults) {
             const searchResultsTitle = document.createElement('h3');
